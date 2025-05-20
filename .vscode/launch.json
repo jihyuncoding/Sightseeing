@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "TravelApp",
+            "request": "launch",
+            "mainClass": "com.travel.app.TravelApp",
+            "projectName": "travel-app"
+        },
+        {
+            "type": "java",
+            "name": "Travel App",
+            "request": "launch",
+            "mainClass": "com.travel.app.TravelApp",
+            "projectName": "OPEN API",
+            "sourcePaths": [
+                "${workspaceFolder}/src/main/java"
+            ],
+            "classPaths": [
+                "${workspaceFolder}/src/main/java",
+                "${workspaceFolder}/lib/*"
+            ]
+        }
+    ]
+}
