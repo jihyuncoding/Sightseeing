@@ -1,8 +1,7 @@
 package com.example.travel.controller;
 
-import com.example.travel.entity.Travel;
-import com.example.travel.sevice.TravelService;
-import lombok.RequiredArgsConstructor;
+import com.example.travel.dto.TravelDTO;
+import com.example.travel.service.TravelService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +25,8 @@ public class TravelController {
 
     //관광지 전체 목록 조회
     @GetMapping
-    public Page<Travel> getAllTravels(@RequestParam(defaultValue = "0") int page,
-                                      @RequestParam(defaultValue = "20") int size) {
+    public Page<TravelDTO> getAllTravels(@RequestParam(defaultValue = "0") int page,
+                                         @RequestParam(defaultValue = "20") int size) {
         return travelService.getTravels(PageRequest.of(page, size));
     }
 }
