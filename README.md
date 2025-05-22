@@ -11,6 +11,7 @@ Sightseeing 모듈은 전체, 수도권, 충청권, 전라권, 경상권, 강원
 - 관광지 상세 정보 보기
 - 상세 페이지에서 관련 관광지 추천
 
+<br>
 
 ## 💻 기술 스택
 Frontend: HTML, CSS, JavaScript
