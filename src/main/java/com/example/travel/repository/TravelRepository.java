@@ -6,4 +6,5 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
 
 public interface TravelRepository extends JpaRepository<Travel, Integer>{
+    boolean existsByTitle(String title);
 }
