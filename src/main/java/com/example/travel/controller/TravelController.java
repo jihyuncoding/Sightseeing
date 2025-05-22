@@ -17,7 +17,7 @@ public class TravelController {
         this.travelService = travelService;
     }
 
-    //csv파일을 DB에 저장
+    //csv파일을 DB에 저장..
     //http://localhost:8080/api/load
     @PostMapping("/load")
     @ResponseBody
