@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/api/list")
+@RequestMapping("/api")
 public class TravelController {
 
     private final TravelService travelService;
@@ -18,7 +18,7 @@ public class TravelController {
     }
 
     //csv파일을 DB에 저장
-    //http://localhost:8080/load
+    //http://localhost:8080/api/load
     @PostMapping("/load")
     @ResponseBody
     public String loadTravel(@RequestParam String path) {
@@ -28,7 +28,7 @@ public class TravelController {
 
     //관광지 전체 목록 조회
     //http://localhost:8080/api/list?page=0&size=20
-    @GetMapping
+    @GetMapping("/list")
     @ResponseBody
     public Page<TravelDTO> getAllTravels(@RequestParam(defaultValue = "0") int page,
                                          @RequestParam(defaultValue = "20") int size) {
