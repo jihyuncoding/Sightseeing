@@ -1,10 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>lookup</title>
+    <title>주변 관광지</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5; /* 연회색 배경 */
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: none;
+            padding: 0 40px;
+            box-sizing: border-box;
+            margin: 0 auto;
+            background-color: white;
+        }
+
+
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .back-button-box {
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 0 0 1px #ccc;
+            margin-right: 8px;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid #aaa;
+            margin: 0;
+        }
+
+        .section {
+            background-color: #f5f5f5;
+            padding: 10px 20px 20px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 20px 0 10px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 6px;
+            height: 120px;
+        }
+
+        .card-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .card-location {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .card-link {
+            font-size: 12px;
+            color: #0077cc;
+            text-decoration: none;
+        }
+
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .pagination span {
+            margin: 0 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
+<div class="wrapper">
+    <div class="header">
+        <button class="back-button-box">&lt;</button>
+        이전
+    </div>
+    <hr class="divider" />
+    <div class="header">
+        주변 관광지
+    </div>
+    <hr class="divider" />
+    <div class="section">
+        <div class="card-grid">
+            <!-- 카드 예시 (20개 반복하면 됨) -->
+            <div class="card">
+                <div class="card-title">인천 개항장역사</div>
+                <div class="card-location">설명...</div>
+                <a href="#" class="card-link">자세히 보기</a>
+            </div>
+            <!-- ...생략 -->
+        </div>
 
+        <div class="pagination">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+            <span>6</span>
+        </div>
+    </div>
+</div>
 </body>
 </html>
