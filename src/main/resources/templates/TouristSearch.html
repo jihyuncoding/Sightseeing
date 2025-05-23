@@ -143,9 +143,9 @@
 
 <header>
     <button class="back-button" onclick="window.history.back()">&lt;</button>
-    <h3>전라권 관광지</h3>
+    <h3 id="regionTitle">관광지</h3> <!-- 초기 텍스트는 나중에 JS로 덮어씀 -->
 </header>
-
+'
 <div class="search-box">
     <input type="text" id="searchInput" placeholder="관광지 키워드를 입력하세요." />
     <button onclick="searchPlaces()">검색</button>
@@ -169,7 +169,9 @@
     let totalPages = 1;
 
     window.onload = () => {
-        fetchPlaces();
+        const urlParams = new URLSearchParams(window.location.search);
+        const region = urlParams.get('region') || '전체';
+        document.getElementById('regionTitle').innerText = `${region} 관광지`;
     };
 
     function fetchPlaces(page = 0) {

@@ -115,7 +115,8 @@
     document.querySelectorAll('.region-buttons button').forEach(button => {
       button.addEventListener('click', () => {
         const region = button.innerText; // 버튼내용 변수에 저장
-        location.href = `TouristSearch.html?region=${encodeURIComponent(region)}`; // 페이지 이동 + 지역명 전달
+          location.href = `/tourist-search?region=${encodeURIComponent(region)}`;
+          // 페이지 이동 + 지역명 전달
       });
     });
 </script>

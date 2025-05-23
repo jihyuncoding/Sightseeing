@@ -1,10 +1,11 @@
 package com.example.travel.entity;
 
+
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table( name = "travel_spots" )
+@Table( name = "travel" )
 @Getter
 @Setter
 @NoArgsConstructor
