@@ -116,6 +116,10 @@
                     }
                 }
 
+                const moreNearbyBtn = document.getElementById("moreNearbyBtn");
+                moreNearbyBtn.addEventListener('click', function (){
+                    location.href = `TouristSpotLookup.html?id=${id}`;
+                });
 
             })
             .catch(err => {
