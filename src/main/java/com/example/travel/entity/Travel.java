@@ -19,6 +19,7 @@ public class Travel {
 
     private String district;
     private String title;
+    @Column(columnDefinition = "TEXT")
     private String description;
     private String address;
     private String phone;

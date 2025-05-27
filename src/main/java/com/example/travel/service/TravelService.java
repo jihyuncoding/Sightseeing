@@ -40,4 +40,11 @@ public class TravelService {
                         .phone(travel.getPhone())
                         .build());
     }
+
+    //주변 관광지 조회
+    public List<Travel> getTravelAroundList(int regionId){
+        Travel travel = travelRepository.findById(regionId).get();
+        String title = travel.getTitle();
+        return travelRepository.findAllByDistrictAndTitle(travel.getDistrict(), title.substring(0,2), regionId);
+    }
 }
