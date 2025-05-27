@@ -1,127 +1,142 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>주변 관광지</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet" />
     <style>
         body {
-            font-family: sans-serif;
+            font-family: 'Noto Sans KR', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5; /* 연회색 배경 */
+            background-color: #f0f2f5;
+            color: #333;
         }
-
-
-        .header {
+        header {
             display: flex;
             align-items: center;
+            gap: 12px;
             padding: 20px;
-            font-size: 18px;
-            font-weight: bold;
+            background-color: #ffffff;
+            border-bottom: 1px solid #ddd;
         }
-
-        .back-button-box {
-            background-color: #f0f0f0;
+        .back-button {
+            padding: 10px 18px;
             border: none;
-            border-radius: 4px;
-            padding: 5px 10px;
-            font-size: 16px;
+            border-radius: 6px;
+            background-color: #dee2e6;
             cursor: pointer;
-            box-shadow: 0 0 0 1px #ccc;
-            margin-right: 8px;
+            transition: background-color 0.2s;
         }
-
-        .divider {
-            border: none;
-            border-top: 1px solid #aaa;
+        .back-button:hover {
+            background-color: #ced4da;
+        }
+        h3 {
+            font-size: 28px;
             margin: 0;
         }
-
-        .section {
-            background-color: #f5f5f5;
-            padding: 10px 20px 20px;
-        }
-
-        .section-title {
-            font-size: 20px;
-            font-weight: bold;
-            margin: 20px 0 10px;
-        }
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-        }
-
-        .card {
-            border: 1px solid #ccc;
-            padding: 10px;
+        .title-box {
+            display: flex;
+            padding: 20px;
             background-color: #ffffff;
-            border-radius: 6px;
-            height: 120px;
+            border-bottom: 1px solid #ddd;
         }
-
-        .card-title {
-            font-weight: bold;
-            margin-bottom: 5px;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            padding: 30px 20px;
         }
-
-        .card-location {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 10px;
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-
-        .card-link {
-            font-size: 12px;
-            color: #0077cc;
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+        .card h4 {
+            margin: 0;
+            font-size: 20px;
+            color: #000;
+        }
+        .card p {
+            font-size: 15px;
+            margin: 8px 0 16px;
+            color: #555;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .card a {
             text-decoration: none;
-        }
-
-        .pagination {
-            text-align: center;
-            margin-top: 20px;
-            padding-bottom: 20px;
-        }
-
-        .pagination span {
-            margin: 0 5px;
-            cursor: pointer;
+            color: #3182ce;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-<div class="wrapper">
-    <div class="header">
-        <button class="back-button-box">&lt;</button>
-        이전
-    </div>
-    <hr class="divider" />
-    <div class="header">
-        주변 관광지
-    </div>
-    <hr class="divider" />
-    <div class="section">
-        <div class="card-grid">
-            <!-- 카드 예시 (20개 반복하면 됨) -->
-            <div class="card">
-                <div class="card-title">인천 개항장역사</div>
-                <div class="card-location">설명...</div>
-                <a href="#" class="card-link">자세히 보기</a>
-            </div>
-            <!-- ...생략 -->
-        </div>
 
-        <div class="pagination">
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>5</span>
-            <span>6</span>
-        </div>
-    </div>
+<header>
+    <button class="back-button" onclick="window.history.back()">&lt;</button>
+    <h3 id="regionTitle" style="cursor: pointer;" onclick="goBack()">이전</h3>
+</header>
+
+<div class="title-box">
+    <h3>주변 관광지</h3>
 </div>
+
+<div id="placesGrid" class="grid"></div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+
+    const BASE_URL = 'http://localhost:8080';
+    const urlParams = new URLSearchParams(window.location.search);
+    const regionId = urlParams.get('id'); // 예: ?id=6
+
+    window.onload = () => {
+        fetchNearbyPlaces();
+    };
+
+    function fetchNearbyPlaces() {
+        if (!regionId) {
+            console.error('regionId 없음');
+            return;
+        }
+
+        fetch(`${BASE_URL}/api/${regionId}/around`)
+            .then(res => res.json())
+            .then(data => {
+                const places = data.travelList || [];
+                renderCards(places);
+            })
+            .catch(err => {
+                console.error('주변 관광지 조회 실패:', err);
+            });
+    }
+
+    function renderCards(data) {
+        const grid = document.getElementById('placesGrid');
+        if (!data.length) {
+            grid.innerHTML = '<p>주변 관광지가 없습니다.</p>';
+            return;
+        }
+
+        grid.innerHTML = data.map(item => `
+            <div class="card">
+                <h4>${item.title}</h4>
+                <p>${item.description || '설명이 없습니다.'}</p>
+                <a href="detail.html?id=${item.id}">자세히 보기</a>
+            </div>
+        `).join('');
+    }
+</script>
+
 </body>
 </html>

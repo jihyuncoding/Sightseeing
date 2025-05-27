@@ -1,126 +1,146 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>관광 명소 상세페이지</title>
+
+    <style>
+        body, p {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0px;
+        }
+
+        #container {
+            margin-left: 120px;
+            margin-right: 120px;
+        }
+
+        #back-link {
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        #detail-container, .detail-subject {
+            display: flex;
+        }
+
+        .detail-subject img {
+            margin-bottom: 10px;
+            margin-right: 10px;
+            width: 33px;
+        }
+
+        #left-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-left: 100px;
+            align-items: center;
+        }
+
+        #moreNearbyBtn {
+            border-radius: 10px;
+            margin: 100px;
+            width: 410px;
+            height: 60px;
+            border: none;
+        }
+
+        #moreNearbyBtn:hover {
+            transition: 0.3s;
+            background-color: black;
+            color: white;
+            border-color: black;
+            cursor: pointer;
+        }
+
+        .detail-object {
+            width: 550px;
+            height: 300px;
+            pointer-events: none;
+        }
+
+        #detail-map {
+            margin-top: 30px;
+        }
+
+        #back-link:hover {
+            transition: 0.3s;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+
+    <!-- Kakao 지도 SDK -->
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=698fd76ab78101d3d9d134a1a417f6ea"></script>
 </head>
-<style>
-    body, p {
 
-        font-family: 'Arial', sans-serif; /* 폰트 설정 */
-        background-color: #f9f9f9; /* 배경색 연한 회색 */
-        margin:0px
-    }
-    #container{
-        margin-left:120px;
-        margin-right:120px;
-    }
-    #back-link{
-        display: inline-block;
-        text-decoration: none;
-    }
-    #detail-container, .detail-subject{
-        display: flex;
-    }
-    .detail-subject img{
-        margin-bottom: 10px;
-        margin-right: 10px;
-        width: 33px;
-    }
-    #left-panel{
-        flex: 1;
-        display: flex;
-        flex-direction: column;  /* 세로 방향 정렬 */
-    }
-    #right-panel{
-        flex: 1;
-        display: flex;
-        flex-direction: column;  /* 세로 방향 정렬 */
-        margin-left: 100px;
-        align-items: center
-    }
-    #moreNearbyBtn{
-        border-radius: 10px;
-        margin : 100px;
-        width: 410px;
-        height: 60px;
-        border: none;
-    }
-    #moreNearbyBtn:hover {
-        transition: 0.3s; /* 상태 변화시 애니메이션 */
-        background-color: black; /* 배경 */
-        color: white; /* 글자 흰색 */
-        border-color: black; /* 테두리 */
-        cursor: pointer;
-    }
-    .detail-object{
-        width: 550px;
-        height: 300px;
-        pointer-events: none;
-    }
-    #detail-map{
-        margin-top: 30px;
-    }
-    #back-link:hover{
-        transition: 0.3s;
-        color: white;
-        cursor: pointer;
-    }
-
-</style>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=698fd76ab78101d3d9d134a1a417f6ea"></script>
 <body>
-    <div id="container">
-        <div id="back-link">
-            <a><h2><  관광지 목록으로</h2></a>
+<div id="container">
+    <div id="back-link">
+        <a><h2>&lt; 관광지 목록으로</h2></a>
+    </div>
+
+    <div id="detail-container">
+        <!-- 왼쪽 -->
+        <div id="left-panel">
+            <div id="detail-image">
+                <div class="detail-subject">
+                    <img src="/images/imageIcon.png">
+                    <p>사진</p>
+                </div>
+                <img class="detail-object" src="/images/testDetailImage.jpg">
+            </div>
+
+            <div id="detail-map">
+                <div class="detail-subject">
+                    <img src="/images/mapIcon.png">
+                    <p>위치</p>
+                </div>
+                <div id="map" class="detail-object"></div>
+                <p>전라남도 여수시 중앙동 (중앙동)</p>
+                <p>061-659-3860</p>
+            </div>
         </div>
 
-        <div id="detail-container">
-            <!-- 왼쪽 (이미지/장소) -->
-            <div id="left-panel">
-                <div id="detail-image">
-                    <div class="detail-subject">
-                        <img src="/images/imageIcon.png">
-                        <p>사진</p>
-                    </div>
-                    <img class="detail-object" src="/images/testDetailImage.jpg">
-                </div>
-                <div id="detail-map">
-                    <div class="detail-subject">
-                        <img src="/images/mapIcon.png">
-                        <p>위치</p>
-                    </div>
-                    <div id="map" class="detail-object"></div>
-                    <p>전라남도 여수시 중앙동 (중앙동)</p>
-                    <p>061-659-3860</p>
-                </div>
-            </div>
-
-            <!-- 오른쪽 (설명) -->
-            <div id="right-panel">
-                <h1>여수 해양 공원</h1>
-                <p>여수구항 해양공원은 2001년부터 여수항만청에서 여수구항 해안을 정비하여 시민에게 휴식공간으로 조성한 공원이다. 장군도와 돌산대교, 남해도와 아기섬이 마주 보이며 하멜등대가 이웃하고 있는 이곳은 대형 공연장, 낚시터, 쉼터 등을 갖추었다. 열대풍의 워싱턴 야자수와 조명등이 조화를 이루며, 밤이면 휘황찬란한 돌산대교의 야경이 아름다워 시민과 관광객들로부터 큰 인기를 끌고 있다. 해양공원의 명소는 방파제 끝단에 조선을 유럽에 최초로 소개한 네덜란드인 하멜을 기념하여 세운 하멜등대이다. 하멜은 1653년 제주도에 표류해 1663년 7월 여수의 전라좌수영으로 배치된 후 잡역에 종사하면서 억류 생활을 이어가다 1666년 일본으로 탈출했다. 하멜등대의 위치가 바로 하멜이 우리나라를 떠난 곳이다. 2005년 3월 국제 로터리클럽 창립 100주년을 맞아 여수지역 로터리인들이 뜻을 모아 세웠다.</p>
-                <button id="moreNearbyBtn">주변 관광지 더보기</button>
-            </div>
+        <!-- 오른쪽 -->
+        <div id="right-panel">
+            <h1>여수 해양 공원</h1>
+            <p>여수구항 해양공원은 2001년부터 여수항만청에서 여수구항 해안을 정비하여 시민에게 휴식공간으로 조성한 공원이다...</p>
+            <button id="moreNearbyBtn">주변 관광지 더보기</button>
         </div>
     </div>
-    <script>
-        var coords = {
-            lat: 34.735426,
-            lng: 127.748547
+</div>
+
+<script>
+    // 지도 좌표 설정
+    var coords = {
+        lat: 34.735426,
+        lng: 127.748547
+    };
+
+    var staticMapContainer = document.getElementById('map'),
+        staticMapOption = {
+            center: new kakao.maps.LatLng(coords.lat, coords.lng),
+            level: 3,
+            marker: {
+                position: new kakao.maps.LatLng(coords.lat, coords.lng)
+            }
         };
 
-        var staticMapContainer  = document.getElementById('map'), // 이미지 지도를 표시할 div
-            staticMapOption = {
-                center: new kakao.maps.LatLng(coords.lat, coords.lng), // 이미지 지도의 중심좌표
-                level: 3, // 이미지 지도의 확대 레벨
-                marker:{
-                    position: new kakao.maps.LatLng(coords.lat, coords.lng)
-                }
-            };
+    var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
 
-        // 이미지 지도 생성
-        var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
-    </script>
+    // 주변 관광지 더보기 클릭 이벤트
+    document.getElementById("moreNearbyBtn").addEventListener("click", () => {
+        location.href = `TouristSpotLookup.html?id=1`;
+    });
+</script>
 </body>
 </html>
