@@ -110,5 +110,15 @@
     <button>제주권</button>
 </div>
 
+<script>
+    // 버튼-다음화면 연결
+    document.querySelectorAll('.region-buttons button').forEach(button => {
+      button.addEventListener('click', () => {
+        const region = button.innerText; // 버튼내용 변수에 저장
+        location.href = `TouristSearch.html?region=${encodeURIComponent(region)}`; // 페이지 이동 + 지역명 전달
+      });
+    });
+</script>
+
 </body>
 </html>
