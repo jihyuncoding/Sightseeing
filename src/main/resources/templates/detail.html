@@ -69,6 +69,34 @@
 
 </style>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=698fd76ab78101d3d9d134a1a417f6ea"></script>
+<script>
+    //데이터 가져오기
+    const BASE_URL = 'http://localhost:8080';
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+
+    window.onload = () => {
+        fetch(`${BASE_URL}/api/list/${id}`)
+            .then(res => res.json())
+            .then(data => {
+                const title = document.getElementById('detail-title');
+                title.textContent= data.title;
+
+                const description = document.getElementById('detail-description');
+                description.textContent= data.description;
+
+                const address = document.getElementById('detail-address');
+                address.textContent= data.address;
+
+                const phone = document.getElementById('detail-phone');
+                phone.textContent= data.phone;
+            })
+            .catch(err => {
+                alert("페이지를 접근할 수 없습니다.");
+                console.error('데이터를 불러오는 데 실패했습니다:', err);
+                window.history.back();
+            })};
+</script>
 <body>
     <div id="container">
         <div id="back-link">
@@ -91,15 +119,15 @@
                         <p>위치</p>
                     </div>
                     <div id="map" class="detail-object"></div>
-                    <p>전라남도 여수시 중앙동 (중앙동)</p>
-                    <p>061-659-3860</p>
+                    <p id="detail-address">전라남도 여수시 중앙동 (중앙동)</p>
+                    <p id="detail-phone">061-659-3860</p>
                 </div>
             </div>
 
             <!-- 오른쪽 (설명) -->
             <div id="right-panel">
-                <h1>여수 해양 공원</h1>
-                <p>여수구항 해양공원은 2001년부터 여수항만청에서 여수구항 해안을 정비하여 시민에게 휴식공간으로 조성한 공원이다. 장군도와 돌산대교, 남해도와 아기섬이 마주 보이며 하멜등대가 이웃하고 있는 이곳은 대형 공연장, 낚시터, 쉼터 등을 갖추었다. 열대풍의 워싱턴 야자수와 조명등이 조화를 이루며, 밤이면 휘황찬란한 돌산대교의 야경이 아름다워 시민과 관광객들로부터 큰 인기를 끌고 있다. 해양공원의 명소는 방파제 끝단에 조선을 유럽에 최초로 소개한 네덜란드인 하멜을 기념하여 세운 하멜등대이다. 하멜은 1653년 제주도에 표류해 1663년 7월 여수의 전라좌수영으로 배치된 후 잡역에 종사하면서 억류 생활을 이어가다 1666년 일본으로 탈출했다. 하멜등대의 위치가 바로 하멜이 우리나라를 떠난 곳이다. 2005년 3월 국제 로터리클럽 창립 100주년을 맞아 여수지역 로터리인들이 뜻을 모아 세웠다.</p>
+                <h1 id="detail-title">여수 해양 공원</h1>
+                <p id="detail-description">여수구항 해양공원은 2001년부터 여수항만청에서 여수구항 해안을 정비하여 시민에게 휴식공간으로 조성한 공원이다. 장군도와 돌산대교, 남해도와 아기섬이 마주 보이며 하멜등대가 이웃하고 있는 이곳은 대형 공연장, 낚시터, 쉼터 등을 갖추었다. 열대풍의 워싱턴 야자수와 조명등이 조화를 이루며, 밤이면 휘황찬란한 돌산대교의 야경이 아름다워 시민과 관광객들로부터 큰 인기를 끌고 있다. 해양공원의 명소는 방파제 끝단에 조선을 유럽에 최초로 소개한 네덜란드인 하멜을 기념하여 세운 하멜등대이다. 하멜은 1653년 제주도에 표류해 1663년 7월 여수의 전라좌수영으로 배치된 후 잡역에 종사하면서 억류 생활을 이어가다 1666년 일본으로 탈출했다. 하멜등대의 위치가 바로 하멜이 우리나라를 떠난 곳이다. 2005년 3월 국제 로터리클럽 창립 100주년을 맞아 여수지역 로터리인들이 뜻을 모아 세웠다.</p>
                 <button id="moreNearbyBtn">주변 관광지 더보기</button>
             </div>
         </div>
