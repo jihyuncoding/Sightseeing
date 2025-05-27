@@ -17,8 +17,8 @@ public class Travel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String district;
     private String title;
+    private String district;
     private String description;
     private String address;
     private String phone;

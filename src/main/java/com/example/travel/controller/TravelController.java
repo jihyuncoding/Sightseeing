@@ -4,6 +4,7 @@ import com.example.travel.dto.TravelDTO;
 import com.example.travel.service.TravelService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class TravelController {
         this.travelService = travelService;
     }
 
-    //csv파일을 DB에 저장..
+    //csv파일을 DB에 저장
     //http://localhost:8080/api/load
     @PostMapping("/load")
     @ResponseBody
@@ -33,5 +34,15 @@ public class TravelController {
     public Page<TravelDTO> getAllTravels(@RequestParam(defaultValue = "0") int page,
                                          @RequestParam(defaultValue = "20") int size) {
         return travelService.getTravels(PageRequest.of(page, size));
+    }
+
+    //관광지 상세 조회
+    //http://localhost:8080/api/list/{id}
+    @GetMapping("/list/{id}")
+    @ResponseBody
+    public ResponseEntity<TravelDTO> getTravelById(@PathVariable int id) {
+        return travelService.getTravelById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }
