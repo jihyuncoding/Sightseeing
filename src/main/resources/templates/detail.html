@@ -14,7 +14,8 @@
         margin-left:120px;
         margin-right:120px;
     }
-    #back-link{
+    #back-link a{
+        color: black;
         display: inline-block;
         text-decoration: none;
     }
@@ -72,7 +73,7 @@
     #detail-map{
         margin-top: 30px;
     }
-    #back-link:hover{
+    #back-link a:hover{
         transition: 0.3s;
         color: white;
         cursor: pointer;
@@ -131,6 +132,12 @@
                 moreNearbyBtn.addEventListener('click', function (){
                     location.href = `TouristSpotLookup.html?id=${id}`;
                 });
+                const district = data.district;
+                const backLink = document.getElementById("back-link");
+                backLink.addEventListener('click', function () {
+
+                    location.href = `TouristSearch.html?region=${district}`;
+                })
 
                 const lastWord = data.title.split(" ").pop();
                 const encoded = encodeURIComponent(lastWord);
@@ -161,7 +168,7 @@
             .catch(err => {
                 alert("페이지를 접근할 수 없습니다.");
                 console.error('데이터를 불러오는 데 실패했습니다:', err);
-                //window.history.back();
+                window.history.back();
             })};
 </script>
 <body>
