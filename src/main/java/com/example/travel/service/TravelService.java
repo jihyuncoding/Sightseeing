@@ -5,6 +5,7 @@ import com.example.travel.entity.Travel;
 import com.example.travel.repository.TravelRepository;
 import com.example.travel.util.CsvReader;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -83,7 +84,7 @@ public class TravelService {
         String title = travel.getTitle();
         List<Travel> list = travelRepository.findAllByDistrictAndTitle(travel.getDistrict(), title.substring(0,2), regionId);
         if (list.isEmpty()) {
-            list = travelRepository.findAllByTwiceRegion(travel.getDistrict(), regionId);
+            list = travelRepository.findAllByTwiceRegion(travel.getDistrict(), regionId, PageRequest.of(0, 20));
         }
         return list;
     }
