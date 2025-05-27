@@ -125,6 +125,10 @@
                         }
 
                         map.setBounds(bounds);  // 지도 중심/범위만 설정
+                    }else if(status === kakao.maps.services.Status.ZERO_RESULT){
+                        const mapDiv = document.getElementById('map');
+                        const p = '<p>지도를 표시할 수 없습니다.</p>';
+                        mapDiv.innerHTML = p;
                     }
                 }
 
