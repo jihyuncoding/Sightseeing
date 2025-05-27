@@ -13,7 +13,7 @@ public class TravelConverter {
         return TravelResponseDTO.GetTotalRsDTO.builder()
                 .id(travel.getId())
                 .title(travel.getTitle())
-                .descrption(travel.getDescription())
+                .description(travel.getDescription())
                 .build();
     }
 

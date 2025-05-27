@@ -24,7 +24,7 @@ public class TravelResponseDTO {
     public static class GetTotalRsDTO{
         int id;
         String title;
-        String descrption;
+        String description;
     }
 
 }
