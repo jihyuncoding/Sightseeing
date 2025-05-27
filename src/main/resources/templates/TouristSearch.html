@@ -179,7 +179,39 @@
 
         function updateHeaderTitle() {
             const headerTitle = document.querySelector('header h3');
-            headerTitle.textContent = region === '전체' ? '관광지 조회' : `${region} 조회`;
+            switch (region) {
+                case '전체':
+                    headerTitle.textContent = '관광지 조회';
+                    headerTitle.style.color = 'black';
+                    break;
+                case '수도권':
+                    headerTitle.textContent = '수도권 조회';
+                    headerTitle.style.color = 'red';
+                    break;
+                case '충청권':
+                    headerTitle.textContent = '충청권 조회';
+                    headerTitle.style.color = 'orange';
+                    break;
+                case '전라권':
+                    headerTitle.textContent = '전라권 조회';
+                    headerTitle.style.color = 'green';
+                    break;
+                case '경상권':
+                    headerTitle.textContent = '경상권 조회';
+                    headerTitle.style.color = 'blue';
+                    break;
+                case '강원권':
+                    headerTitle.textContent = '강원권 조회';
+                    headerTitle.style.color = 'purple';
+                    break;
+                case '제주권':
+                    headerTitle.textContent = '제주권 조회';
+                    headerTitle.style.color = 'pink';
+                    break;
+                default:
+                    headerTitle.textContent = `${region} 조회`;
+                    headerTitle.style.color = '#333';
+            }
         }
 
         //api에서 관광지리스트 불러오기
