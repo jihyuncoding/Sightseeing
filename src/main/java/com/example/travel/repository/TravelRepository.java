@@ -17,5 +17,8 @@ public interface TravelRepository extends JpaRepository<Travel, Integer>{
                                                  @Param("prefix") String prefix,
                                                  @Param("id") int id);
 
+    @Query("SELECT t FROM Travel t WHERE t.district = :district AND t.id <> :id")
+    List<Travel> findAllByTwiceRegion(@Param("district") String district,
+                                           @Param("id") int id);
 
 }

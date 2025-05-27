@@ -45,6 +45,10 @@ public class TravelService {
     public List<Travel> getTravelAroundList(int regionId){
         Travel travel = travelRepository.findById(regionId).get();
         String title = travel.getTitle();
-        return travelRepository.findAllByDistrictAndTitle(travel.getDistrict(), title.substring(0,2), regionId);
+        List<Travel> list = travelRepository.findAllByDistrictAndTitle(travel.getDistrict(), title.substring(0,2), regionId);
+        if (list.isEmpty()) {
+            list = travelRepository.findAllByTwiceRegion(travel.getDistrict(), regionId);
+        }
+        return list;
     }
 }
