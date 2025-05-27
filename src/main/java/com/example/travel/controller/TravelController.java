@@ -18,8 +18,6 @@ public class TravelController {
         this.travelService = travelService;
     }
 
-    //csv파일을 DB에 저장
-    //http://localhost:8080/api/load
     @PostMapping("/load")
     @ResponseBody
     public String loadTravel(@RequestParam String path) {
@@ -39,13 +37,19 @@ public class TravelController {
         //프론트요청은 region이고, 내부 백에서 district로 처리
     }
 
-    //관광지 상세 조회
-    //http://localhost:8080/api/list/{id}
     @GetMapping("/list/{id}")
     @ResponseBody
     public ResponseEntity<TravelDTO> getTravelById(@PathVariable int id) {
         return travelService.getTravelById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/search")
+    @ResponseBody
+    public Page<TravelDTO> searchTravels(@RequestParam String keyword,
+                                         @RequestParam(defaultValue = "0") int page,
+                                         @RequestParam(defaultValue = "20") int size) {
+        return travelService.searchTravelsByKeyword(keyword, PageRequest.of(page, size));
     }
 }

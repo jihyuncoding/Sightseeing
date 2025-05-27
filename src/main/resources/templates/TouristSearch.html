@@ -12,7 +12,6 @@
             background-color: #f0f2f5;
             color: #333;
         }
-
         header {
             display: flex;
             align-items: center;
@@ -21,7 +20,6 @@
             background-color: #ffffff;
             border-bottom: 1px solid #ddd;
         }
-
         .back-button {
             padding: 10px 18px;
             border: none;
@@ -30,17 +28,14 @@
             cursor: pointer;
             transition: background-color 0.2s;
         }
-
         .back-button:hover {
             background-color: #ced4da;
         }
-
         h3 {
             font-size: 28px;
             color: #2f855a;
             margin: 0;
         }
-
         .search-box {
             display: flex;
             padding: 20px;
@@ -48,7 +43,6 @@
             background-color: #ffffff;
             border-bottom: 1px solid #ddd;
         }
-
         .search-box input {
             flex: 1;
             padding: 14px;
@@ -56,33 +50,21 @@
             border: 1px solid #ccc;
             border-radius: 8px;
         }
-
-        .search-box input:focus {
-            outline: none;
-            border-color: #ccc;
-        }
-
         .search-box button {
             padding: 14px 24px;
             font-size: 16px;
             border: none;
             background-color: #ccc;
-            color: #000000;
+            color: #000;
             border-radius: 8px;
             cursor: pointer;
         }
-
-        .search-box button:hover {
-            background-color: #ccc;
-        }
-
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 24px;
             padding: 30px 20px;
         }
-
         .card {
             background-color: #ffffff;
             border-radius: 12px;
@@ -90,18 +72,15 @@
             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
             transition: transform 0.2s, box-shadow 0.2s;
         }
-
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
         }
-
         .card h4 {
             margin: 0;
             font-size: 20px;
-            color: #000000;
+            color: #000;
         }
-
         .card p {
             font-size: 15px;
             margin: 8px 0 16px;
@@ -110,32 +89,22 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
         .card a {
             text-decoration: none;
             color: #3182ce;
             font-weight: bold;
         }
-
-        .card a:hover {
-            text-decoration: underline;
-        }
-
         .pagination {
             text-align: center;
             padding: 20px;
             background-color: #ffffff;
         }
-
         .pagination a {
             margin: 0 8px;
-            color: #000000;
+            color: #000;
             font-weight: bold;
             text-decoration: none;
-        }
-
-        .pagination a:hover {
-            text-decoration: underline;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -143,7 +112,7 @@
 
 <header>
     <button class="back-button" onclick="window.history.back()">&lt;</button>
-    <h3>관광지 조회</h3>
+    <h3 id="regionTitle">지역 관광지</h3>
 </header>
 
 <div class="search-box">
@@ -151,16 +120,9 @@
     <button onclick="searchPlaces()">검색</button>
 </div>
 
-<div id="placesGrid" class="grid">
-</div>
+<div id="placesGrid" class="grid"></div>
 
-<div class="pagination">
-    <a href="#">[1]</a>
-    <a href="#">[2]</a>
-    <a href="#">[3]</a>
-    <a href="#">[4]</a>
-    <a href="#">[5]</a>
-</div>
+<div class="pagination" id="pagination"></div>
 
     <script>
         const BASE_URL = 'http://localhost:8080';
@@ -171,7 +133,6 @@
         let totalPages = 1;
         let currentKeyword = '';
 
-        //초기로드
         window.onload = () => {
             updateHeaderTitle();
             fetchPlaces();
@@ -263,16 +224,13 @@
                 return;
             }
 
-            grid.innerHTML = data
-                .map(
-                    (item) => `
-            <div class="card">
-                <h4>${item.title}</h4>
-                <p>${item.description || '설명이 없습니다.'}</p>
-                <a href="/detail/${item.id}">자세히 보기</a>
-            </div>`
-                )
-                .join('');
+            grid.innerHTML = data.map((item) => `
+                <div class="card">
+                    <h4>${item.title}</h4>
+                    <p>${item.description || '설명이 없습니다.'}</p>
+                    <a href="/detail/${item.id}">자세히 보기</a>
+                </div>
+            `).join('');
         }
 
         function renderPagination(isSearch = false, keyword = '') {

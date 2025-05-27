@@ -5,8 +5,8 @@ import com.example.travel.entity.Travel;
 import com.example.travel.repository.TravelRepository;
 import com.example.travel.util.CsvReader;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +17,7 @@ public class TravelService {
     private final TravelRepository travelRepository;
     private final CsvReader csvReader;
 
-    public TravelService( TravelRepository travelRepository, CsvReader csvReader) {
+    public TravelService(TravelRepository travelRepository, CsvReader csvReader) {
         this.travelRepository = travelRepository;
         this.csvReader = csvReader;
     }
@@ -34,14 +34,7 @@ public class TravelService {
     // 기존 전체 조회용 함수
     public Page<TravelDTO> getTravels(Pageable pageable) {
         return travelRepository.findAll(pageable)
-                .map(travel -> TravelDTO.builder()
-                        .id(travel.getId())
-                        .title(travel.getTitle())
-                        .district(travel.getDistrict())
-                        .description(travel.getDescription())
-                        .address(travel.getAddress())
-                        .phone(travel.getPhone())
-                        .build());
+                .map(this::convertToDTO);
     }
 
     // 지역 필터링 메서드 추가
@@ -64,13 +57,23 @@ public class TravelService {
 
     public Optional<TravelDTO> getTravelById(int id) {
         return travelRepository.findById(id)
-                .map(travel -> TravelDTO.builder()
-                        .id(travel.getId())
-                        .title(travel.getTitle())
-                        .description(travel.getDescription())
-                        .address(travel.getAddress())
-                        .district(travel.getDistrict())
-                        .phone(travel.getPhone())
-                        .build());
+                .map(this::convertToDTO);
+    }
+
+    public Page<TravelDTO> searchTravelsByKeyword(String keyword, Pageable pageable) {
+        return travelRepository
+                .findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(keyword, keyword, pageable)
+                .map(this::convertToDTO);
+    }
+
+    private TravelDTO convertToDTO(Travel travel) {
+        return TravelDTO.builder()
+                .id(travel.getId())
+                .title(travel.getTitle())
+                .district(travel.getDistrict())
+                .description(travel.getDescription())
+                .address(travel.getAddress())
+                .phone(travel.getPhone())
+                .build();
     }
 }
