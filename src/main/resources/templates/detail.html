@@ -6,7 +6,6 @@
 </head>
 <style>
     body, p {
-
         font-family: 'Arial', sans-serif; /* 폰트 설정 */
         background-color: #f9f9f9; /* 배경색 연한 회색 */
         margin:0px
@@ -54,9 +53,21 @@
         cursor: pointer;
     }
     .detail-object{
+        display: table;
         width: 550px;
         height: 300px;
         pointer-events: auto;
+    }
+    .detail-object p{
+        background: #f0f0f0;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+    }
+    .detail-object img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
     #detail-map{
         margin-top: 30px;
@@ -121,6 +132,31 @@
                     location.href = `TouristSpotLookup.html?id=${id}`;
                 });
 
+                const lastWord = data.title.split(" ").pop();
+                const encoded = encodeURIComponent(lastWord);
+                const GALLERY_BASE_URL = 'https://apis.data.go.kr/B551011/PhotoGalleryService1';
+                const url = `${GALLERY_BASE_URL}/gallerySearchList1?MobileOS=WIN&MobileApp=travel&arrange=A&keyword=${encoded}&_type=json&serviceKey=cBsjTI3RGYatqH5ivy8nKZNUKHjnKZ82ePTKupKvIAaYomexs8NEdpeBLy8CHPH5rAgpnGewCuMARq7cwoMWsA%3D%3D`;
+
+                fetch(url)
+                    .then(res => res.json())
+                    .then(data => {
+                        const items = data?.response?.body?.items?.item;
+                        const imgDiv = document.getElementById('detail-img');
+                        if (items && items.length > 0) {
+                            const src = items[0].galWebImageUrl;
+                            const img = `<img src="${src}">`;
+                            imgDiv.innerHTML = img;
+                        } else {
+                            const p = '<p>이미지가 존재하지 않습니다.</p>';
+                            imgDiv.innerHTML = p;
+                        }
+                    })
+                    .catch(err => {
+                        console.error('데이터를 불러오는 데 실패했습니다:', err);
+                    });
+
+
+
             })
             .catch(err => {
                 alert("페이지를 접근할 수 없습니다.");
@@ -128,86 +164,6 @@
                 //window.history.back();
             })};
 </script>
-    <title>관광 명소 상세페이지</title>
-
-    <style>
-        body, p {
-            font-family: 'Arial', sans-serif;
-            background-color: #f9f9f9;
-            margin: 0px;
-        }
-
-        #container {
-            margin-left: 120px;
-            margin-right: 120px;
-        }
-
-        #back-link {
-            display: inline-block;
-            text-decoration: none;
-        }
-
-        #detail-container, .detail-subject {
-            display: flex;
-        }
-
-        .detail-subject img {
-            margin-bottom: 10px;
-            margin-right: 10px;
-            width: 33px;
-        }
-
-        #left-panel {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        #right-panel {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            margin-left: 100px;
-            align-items: center;
-        }
-
-        #moreNearbyBtn {
-            border-radius: 10px;
-            margin: 100px;
-            width: 410px;
-            height: 60px;
-            border: none;
-        }
-
-        #moreNearbyBtn:hover {
-            transition: 0.3s;
-            background-color: black;
-            color: white;
-            border-color: black;
-            cursor: pointer;
-        }
-
-        .detail-object {
-            width: 550px;
-            height: 300px;
-            pointer-events: auto;
-        }
-
-        #detail-map {
-            margin-top: 30px;
-        }
-
-        #back-link:hover {
-            transition: 0.3s;
-            color: white;
-            cursor: pointer;
-        }
-    </style>
-
-    <!-- Kakao 지도 SDK -->
-    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=698fd76ab78101d3d9d134a1a417f6ea"></script>
-</head>
-
 <body>
 <div id="container">
     <div id="back-link">
@@ -222,7 +178,9 @@
                         <img src="/images/imageIcon.png">
                         <p>사진</p>
                     </div>
-                    <img class="detail-object" src="/images/testDetailImage.jpg">
+                    <div class="detail-object" id="detail-img">
+
+                    </div>
                 </div>
                 <div id="detail-map">
                     <div class="detail-subject">
