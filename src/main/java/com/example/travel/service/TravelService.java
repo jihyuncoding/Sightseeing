@@ -30,8 +30,26 @@ public class TravelService {
         }
     }
 
+    // 기존 전체 조회용 함수
     public Page<TravelDTO> getTravels(Pageable pageable) {
         return travelRepository.findAll(pageable)
+                .map(travel -> TravelDTO.builder()
+                        .id(travel.getId())
+                        .title(travel.getTitle())
+                        .district(travel.getDistrict())
+                        .description(travel.getDescription())
+                        .address(travel.getAddress())
+                        .phone(travel.getPhone())
+                        .build());
+    }
+
+    // 지역 필터링 메서드 추가
+    public Page<TravelDTO> getTravels(Pageable pageable, String district) {
+        if (district == null || district.isEmpty() || district.equals("전체")) {
+            return getTravels(pageable);
+        }
+
+        return travelRepository.findByDistrictContaining(district, pageable)
                 .map(travel -> TravelDTO.builder()
                         .id(travel.getId())
                         .title(travel.getTitle())
@@ -39,5 +57,6 @@ public class TravelService {
                         .address(travel.getAddress())
                         .phone(travel.getPhone())
                         .build());
+
     }
 }

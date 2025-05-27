@@ -10,7 +10,7 @@ import lombok.*;
 public class TravelDTO {
     private int id;
     private String title;
-    private String district;
+    private String district; //권역
     private String description;
     private String address;
     private String phone;

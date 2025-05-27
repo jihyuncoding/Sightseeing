@@ -26,12 +26,15 @@ public class TravelController {
         return "CSV 업로드 및 저장 완료";
     }
 
-    //관광지 전체 목록 조회
+    //관광지 전체/지역별 조회
     //http://localhost:8080/api/list?page=0&size=20
     @GetMapping("/list")
     @ResponseBody
-    public Page<TravelDTO> getAllTravels(@RequestParam(defaultValue = "0") int page,
-                                         @RequestParam(defaultValue = "20") int size) {
-        return travelService.getTravels(PageRequest.of(page, size));
+    public Page<TravelDTO> getAllTravels(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(required = false) String region) { //region 파라미터 추갸
+        return travelService.getTravels(PageRequest.of(page, size), region);
+        //프론트요청은 region이고, 내부 백에서 district로 처리
     }
 }
