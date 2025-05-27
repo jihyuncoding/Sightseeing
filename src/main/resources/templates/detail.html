@@ -56,7 +56,7 @@
     .detail-object{
         width: 550px;
         height: 300px;
-        pointer-events: none;
+        pointer-events: auto;
     }
     #detail-map{
         margin-top: 30px;
@@ -68,7 +68,7 @@
     }
 
 </style>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=698fd76ab78101d3d9d134a1a417f6ea"></script>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=698fd76ab78101d3d9d134a1a417f6ea&libraries=services"></script>
 <script>
     //데이터 가져오기
     const BASE_URL = 'http://localhost:8080';
@@ -90,11 +90,38 @@
 
                 const phone = document.getElementById('detail-phone');
                 phone.textContent= data.phone;
+
+                //지도
+                var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                    mapOption = {
+                        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 초기 중심좌표
+                        level: 3, // 확대 레벨
+                    };
+
+                var map = new kakao.maps.Map(mapContainer, mapOption);
+                var ps = new kakao.maps.services.Places();
+
+                ps.keywordSearch(data.title, placesSearchCB);
+
+                function placesSearchCB (data, status, pagination) {
+                    if (status === kakao.maps.services.Status.OK) {
+                        var bounds = new kakao.maps.LatLngBounds();
+
+                        for (var i=0; i<data.length; i++) {
+
+                            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+                        }
+
+                        map.setBounds(bounds);  // 지도 중심/범위만 설정
+                    }
+                }
+
+
             })
             .catch(err => {
                 alert("페이지를 접근할 수 없습니다.");
                 console.error('데이터를 불러오는 데 실패했습니다:', err);
-                window.history.back();
+                //window.history.back();
             })};
 </script>
 <body>
@@ -132,23 +159,5 @@
             </div>
         </div>
     </div>
-    <script>
-        var coords = {
-            lat: 34.735426,
-            lng: 127.748547
-        };
-
-        var staticMapContainer  = document.getElementById('map'), // 이미지 지도를 표시할 div
-            staticMapOption = {
-                center: new kakao.maps.LatLng(coords.lat, coords.lng), // 이미지 지도의 중심좌표
-                level: 3, // 이미지 지도의 확대 레벨
-                marker:{
-                    position: new kakao.maps.LatLng(coords.lat, coords.lng)
-                }
-            };
-
-        // 이미지 지도 생성
-        var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
-    </script>
 </body>
 </html>
