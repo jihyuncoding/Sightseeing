@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TravelService {
@@ -53,10 +54,23 @@ public class TravelService {
                 .map(travel -> TravelDTO.builder()
                         .id(travel.getId())
                         .title(travel.getTitle())
+                        .district(travel.getDistrict())
                         .description(travel.getDescription())
                         .address(travel.getAddress())
                         .phone(travel.getPhone())
                         .build());
 
+    }
+
+    public Optional<TravelDTO> getTravelById(int id) {
+        return travelRepository.findById(id)
+                .map(travel -> TravelDTO.builder()
+                        .id(travel.getId())
+                        .title(travel.getTitle())
+                        .description(travel.getDescription())
+                        .address(travel.getAddress())
+                        .district(travel.getDistrict())
+                        .phone(travel.getPhone())
+                        .build());
     }
 }

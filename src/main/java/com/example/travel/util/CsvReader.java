@@ -17,7 +17,7 @@ public class CsvReader {
             String[] nextLine;
             reader.readNext();
             while ((nextLine = reader.readNext()) != null) {
-                if (nextLine.length < 6) continue;
+                if (nextLine.length < 6 || nextLine[2].trim().isEmpty()) continue;
 
                 Travel travel = Travel.builder()
                                 .district((nextLine[1].trim()))

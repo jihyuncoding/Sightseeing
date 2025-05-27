@@ -56,6 +56,7 @@
     .detail-object{
         width: 550px;
         height: 300px;
+        pointer-events: none;
     }
     #detail-map{
         margin-top: 30px;
@@ -67,6 +68,7 @@
     }
 
 </style>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=698fd76ab78101d3d9d134a1a417f6ea"></script>
 <body>
     <div id="container">
         <div id="back-link">
@@ -88,7 +90,7 @@
                         <img src="/images/mapIcon.png">
                         <p>위치</p>
                     </div>
-                    <iframe class="detail-object" src=""></iframe>
+                    <div id="map" class="detail-object"></div>
                     <p>전라남도 여수시 중앙동 (중앙동)</p>
                     <p>061-659-3860</p>
                 </div>
@@ -102,5 +104,23 @@
             </div>
         </div>
     </div>
+    <script>
+        var coords = {
+            lat: 34.735426,
+            lng: 127.748547
+        };
+
+        var staticMapContainer  = document.getElementById('map'), // 이미지 지도를 표시할 div
+            staticMapOption = {
+                center: new kakao.maps.LatLng(coords.lat, coords.lng), // 이미지 지도의 중심좌표
+                level: 3, // 이미지 지도의 확대 레벨
+                marker:{
+                    position: new kakao.maps.LatLng(coords.lat, coords.lng)
+                }
+            };
+
+        // 이미지 지도 생성
+        var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+    </script>
 </body>
 </html>

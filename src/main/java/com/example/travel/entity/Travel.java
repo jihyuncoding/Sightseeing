@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table( name = "travel_spots" )
+@Table( name = "travel" )
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,8 +17,8 @@ public class Travel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String district;
     private String title;
+    private String district;
     private String description;
     private String address;
     private String phone;
